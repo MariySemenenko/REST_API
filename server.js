@@ -13,7 +13,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 const connectDb = require("./config/conectDb")
 
+const ErrorHandler = require("./middlewares/errorhandler")
+
 app.use("/api/v1/", require('./routes/filmRoutes'))
+
+app.use(ErrorHandler)
 
 connectDb()
 

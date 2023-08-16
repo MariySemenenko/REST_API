@@ -3,19 +3,26 @@ const filmsRoutes = require("express").Router();
 
 const filmCtrl = require("../controllers/Film");
 
-//add film
-filmsRoutes.post("/film", filmCtrl.add);//http://localhost:5000/api/v1/film
+//add film (post) http://localhost:5000/api/v1/film
+filmsRoutes.post(
+  "/film",
+  (req, res, next) => {
+    console.log("joi");
+    next();
+  },
+  filmCtrl.add
+); 
 
-//get all
-filmsRoutes.get("/film", filmCtrl.getAll);//http://localhost:5000/api/v1/film
+//get all (get) http://localhost:5000/api/v1/film
+filmsRoutes.get("/film", filmCtrl.getAll); 
 
-//get one id
-filmsRoutes.get("/film/:id", filmCtrl.getById);//http://localhost:5000/api/v1/film/100
+//get one id (get) http://localhost:5000/api/v1/film/64dbc4fcb7639fc259823310
+filmsRoutes.get("/film/:id", filmCtrl.getById); 
 
 //update one
-filmsRoutes.put("/film/:id", filmCtrl.update);//http://localhost:5000/api/v1/film/100
+filmsRoutes.put("/film/:id", filmCtrl.update); //http://localhost:5000/api/v1/film/100
 
 //delete one
-filmsRoutes.delete("/film/:id", filmCtrl.remove);//http://localhost:5000/api/v1/film/100
+filmsRoutes.delete("/film/:id", filmCtrl.remove); //http://localhost:5000/api/v1/film/100
 
 module.exports = filmsRoutes;

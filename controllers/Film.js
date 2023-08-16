@@ -1,19 +1,31 @@
-const FilmsModal = require('../models/filmsModal')
+const FilmsModal = require("../models/filmsModal");
+const asyncHandler = require("express-async-handler"); //librery for try catch
+
 
 class Films {
-  add = async (req, res) => {
+  add = asyncHandler(async (req, res) => {
+    const { title, year } = req.body;
+    if (!title || !year) {
+      res.status(404);
+      throw new Error("Provide all films!");
+    }
     //save base
-   const film = await FilmsModal.create({...req.body})
-   res.status(201).json({code:201, data:film})
-  };
+    const film = await FilmsModal.create({
+      ...req.body,
+    });
+    res.status(201).json({ code: 201, data: film });
+  });
 
-  getAll = (req, res) => {
-    res.send("getAll");
-  };
+  getAll = asyncHandler(async (req, res) => {
+    
+    const allFilms = await FilmsModal.find({});
+    res.status(200).json({ code: 200, data: allFilms, qty: allFilms.length });
+  });
 
-  getById = (req, res) => {
-    res.send("getById");
-  };
+  getById = asyncHandler(async (req, res) => {
+    const films = await FilmsModal.findById(req.params.id);
+    res.status(200).json({ code: 200, data: films });
+  });
 
   update = (req, res) => {
     res.send("update");
